@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if(root == NULL){
+            return 0;
+        }
+
+        //check if leaf node, consider the leaf node
+        if(root->left == NULL && root->right == NULL){
+            return 1;
+        }
+
+        int leftDepth = INT_MAX;    // initializing with MAX because at last min of both will be returned
+        int rightDepth = INT_MAX;
+        if(root->left)leftDepth = minDepth(root->left); // if(root->left exist) then move into that
+        if(root->right)rightDepth = minDepth(root->right); // if(root->right exist) then move into that
+
+        return min(leftDepth, rightDepth) + 1;
+    }
+};
