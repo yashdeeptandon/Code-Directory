@@ -10,7 +10,6 @@ public:
 
         while(!q.empty()){
             TreeNode *temp = q.front();
-            if(temp!= NULL)cout<<temp->val<<endl;
             q.pop();
             if(temp == NULL){ // level change
                 ans.push_back(level);
