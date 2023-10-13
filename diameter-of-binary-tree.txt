@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int depthOfTree(TreeNode *root, int &maxDiameter){
+        if(root == NULL){
+            return 0;
+        }
+
+        int diameter = 0; // diameter of current tree;
+        int leftDepth = depthOfTree(root->left, maxDiameter);
+        int rightDepth = depthOfTree(root->right, maxDiameter);
+        diameter = leftDepth + rightDepth;  //calculating diameter for current tree
+
+        if(maxDiameter < diameter){
+            maxDiameter = diameter;
+        }
+
+        return max(leftDepth, rightDepth) + 1; // returning max depth of current tree
+    }
+
+    int diameterOfBinaryTree(TreeNode* root) {
+        int maxDiameter = 0;
+        int ans = depthOfTree(root, maxDiameter);
+
+        return maxDiameter;
+    }
+};

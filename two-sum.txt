@@ -1,0 +1,35 @@
+Brute force-> use nested for loop and check if sum == target.
+Optimal Approach-> using hash map.
+
+Code:
+
+vector<int> twoSum(vector<int>& nums, int target) {
+        //time complexity -> O(N^2)
+
+        // vector<int> ans;
+        // for(int i = 0; i < nums.size(); i++){
+        //     for(int j = i + 1; j < nums.size(); j++){
+        //         if(nums[i] + nums[j] == target){
+        //             ans.push_back(i);
+        //             ans.push_back(j);
+        //         }
+        //     }
+        // }
+
+        // return ans;
+       
+       unordered_map<int, int> numMap; // Create an unordered map to store elements and their indices
+        int n = nums.size(); // Get the size of the nums array
+
+        for (int i = 0; i < n; i++) { // Iterate through each element of the nums array
+            int complement = target - nums[i]; // Compute the complement by subtracting the current number from the target number
+
+            if (numMap.count(complement)) { // Check if the complement exists in the numMap
+                return {numMap[complement], i}; // If it does, return the indices of the two numbers that add up to the target
+            }
+
+            numMap[nums[i]] = i; // If the complement doesn't exist, add the current number and its index to the numMap
+        }
+
+        return {}; // If no solution is found, return an empty vector
+    }

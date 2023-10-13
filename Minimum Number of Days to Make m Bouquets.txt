@@ -1,0 +1,68 @@
+class Solution {
+public:
+    int findMax(vector<int> &v){
+        int maxi = INT_MIN;
+        for(int i = 0 ; i < v.size(); i++){
+            if(v[i] > maxi){
+                maxi = v[i];
+            }
+        }
+
+        return maxi;
+    }
+
+    int findMin(vector<int> &v){
+        int mini = INT_MAX;
+        for(int i = 0 ; i < v.size(); i++){
+            if(v[i] < mini){
+                mini = v[i];
+            }
+        }
+
+        return mini;
+    }
+
+    int possible(vector<int> &v, int m, int k, int mid){
+        int totalBouq = 0;
+        int cnt = 0;
+        for(int j = 0; j < v.size(); j++){
+            if(v[j] <= mid){
+                cnt++;
+            }
+            else{
+                totalBouq += cnt/k;
+                cnt = 0;
+            }
+        }
+        totalBouq += cnt/k;
+        if(totalBouq >= m){
+            return mid;
+        }
+
+        return -1;
+    }
+
+    int minDays(vector<int>& bloomDay, int m, int k) {
+
+        
+        if(bloomDay.size() < (long long)m*k)return -1;
+
+        int end = findMax(bloomDay);
+        int start = findMin(bloomDay);
+        int mid = start + (end - start) / 2;
+        int ans = -1;
+
+        while(start <= end){
+            if(possible(bloomDay, m, k, mid) >= m){
+                ans = possible(bloomDay, m, k, mid);
+                end = mid - 1;
+            }
+            else{
+                start = mid + 1;
+            }
+            mid = start + (end - start) / 2;
+        }
+        return ans;
+
+    }
+};

@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string longestCommonPrefix(vector<string> &strs)
+{
+    if (strs.empty())
+        return ""; // Handle the case when the vector is empty
+
+    string shortest = strs[0];
+    for (const string &str : strs)
+    {
+        if (str.length() < shortest.length())
+            shortest = str;
+    }
+
+    string ans = "";
+    for (int i = 0; i < shortest.length(); i++)
+    {
+        char currentChar = shortest[i];
+        for (const string &str : strs)
+        {
+            if (str[i] != currentChar)
+                return ans; // Found a mismatch, return the current prefix
+        }
+        ans.push_back(currentChar);
+    }
+
+    return ans;
+}
+
+int main()
+{
+    vector<string> strs;
+    int n;
+    cin >> n;
+    int i = 0;
+    while (i < n)
+    {
+        string temp;
+        cin >> temp;
+        strs.push_back(temp);
+        i++;
+    }
+
+    string ans = longestCommonPrefix(strs);
+    cout << ans;
+}

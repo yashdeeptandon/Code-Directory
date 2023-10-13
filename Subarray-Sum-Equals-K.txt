@@ -1,0 +1,45 @@
+int subarraySum(vector<int>& nums, int k) {
+        //brute force
+        // int cnt = 0;
+        // for(int i = 0; i < nums.size(); i++){
+        //     for(int j = i; j < nums.size(); j++){
+        //         int sum = 0;
+        //         for(int k = i; k <= j; k++){
+        //             sum = sum + nums[k];
+        //         }
+        //         if(sum == k){
+        //             cnt++;
+        //         }
+        //     }
+        // }
+        // return cnt;
+
+        //better
+        // int n = nums.size();
+        // int cnt = 0;
+        // for(int i = 0; i < n; i++){
+        //     int sum = 0;
+        //     for(int j = i; j < n; j++){
+        //         sum = sum + nums[j];
+        //         if(sum == k){
+        //         cnt++;
+        //     }
+        //     }
+        // }
+
+        // return cnt;
+
+        //using hashmap
+        map<int,int> mpp;	//map<preSum,cnt> mpp;
+        mpp[0] = 1;
+        int preSum = 0;
+        int cnt = 0;
+        for(int i = 0; i < nums.size(); i++){
+            preSum += nums[i];
+            int remove = preSum - k;
+            cnt += mpp[remove];	//basically how many times previously preSum - k has occured
+            mpp[preSum]++;
+        }
+
+        return cnt;
+    }

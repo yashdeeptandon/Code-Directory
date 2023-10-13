@@ -1,0 +1,34 @@
+#include <bits/stdc++.h> 
+int findMinimumCost(string str) {
+  // Write your code here
+  stack<char> st;
+  int countOpen = 0;
+  int countClosed = 0;
+
+  for(int i = 0; i < str.length(); i++){
+    char ch = str[i];
+    if(ch == '{'){
+      st.push(ch);
+      countOpen++;
+    }
+    else if(ch == '}' && !st.empty() && st.top() == '{'){
+      st.pop();
+      countOpen--;
+    }
+    else if(ch == '}'){
+      st.push(ch);
+      countClosed++;
+    }
+  }
+
+  if(st.size() % 2 != 0){
+    return -1;
+  }
+  // for input like -> }}}}}{ -> ans = 4
+  else if(countOpen % 2 != 0 && countClosed % 2 != 0){
+    return (countOpen+countClosed) / 2 + 1;
+  }
+  else{
+    return st.size() / 2;
+  }
+}

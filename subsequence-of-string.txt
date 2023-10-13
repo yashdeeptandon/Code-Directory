@@ -1,0 +1,26 @@
+#include <bits/stdc++.h> 
+void solve(string str, string output, int index, vector<string>& ans){
+	if(index >= str.length()){
+		if(output != "")	//as task is to find all non-empty possible subsequence of str
+		ans.push_back(output);
+		return;
+	}
+
+	//exclude
+	solve(str, output, index + 1, ans);
+
+	//include
+	char input = str[index];
+	output.push_back(input);
+	solve(str, output, index + 1, ans);
+	
+}
+vector<string> subsequences(string str){
+	
+	// Write your code here
+	string output="";
+	int index = 0;
+	vector<string> ans;
+	solve(str, output, index, ans);
+	return ans;
+}

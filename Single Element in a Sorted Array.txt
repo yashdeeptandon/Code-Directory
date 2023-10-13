@@ -1,0 +1,72 @@
+Optimal Approach(Using Binary Search): 
+We are going to use the Binary Search algorithm to optimize the approach.
+
+The primary objective of the Binary Search algorithm is to efficiently determine the appropriate half to eliminate, thereby reducing the search space by half. It does this by determining a specific condition that ensures that the target is not present in that half.
+
+If arr[mid] != arr[mid-1] and arr[mid] != arr[mid+1]: If this condition is true for arr[mid], we can conclude arr[mid] is the single element.
+The above condition will throw errors in the following 3 cases:
+
+If the array size is 1.
+If ‘mid’ points to 0 i.e. the first index.
+If ‘mid’ points to n-1 i.e. the last index.
+Note: At the start of the algorithm, we address the above edge cases without requiring separate conditions during the check for arr[mid] inside the loop. And the search space will be from index 1 to n-2 as indices 0 and n-1 have already been checked.
+
+Resolving edge cases:
+
+If n == 1: This means the array size is 1. If the array contains only one element, we will return that element only.
+If arr[0] != arr[1]: This means the very first element of the array is the single element. So, we will return arr[0].
+If arr[n-1] != arr[n-2]: This means the last element of the array is the single element. So, we will return arr[n-1].
+How to identify the halves:
+
+
+By observing the above image, we can clearly notice a striking distinction between the index sequences of the left and right halves of the single element in the array. 
+
+The index sequence of the duplicate numbers in the left half is always (even, odd). That means one of the following conditions will be satisfied if we are in the left half:
+If the current index is even, the element at the next odd index will be the same as the current element.
+Similarly, If the current index is odd, the element at the preceding even index will be the same as the current element.
+The index sequence of the duplicate numbers in the right half is always (odd, even). That means one of the following conditions will be satisfied if we are in the right half:
+If the current index is even, the element at the preceding odd index will be the same as the current element.
+Similarly, If the current index is odd, the element at the next even index will be the same as the current element.
+Now, we can easily identify the left and right halves, just by checking the sequence of the current index, i, like the following:
+
+If (i % 2 == 0 and arr[i] == arr[i+1]) or (i%2 == 1 and arr[i] == arr[i-1]), we are in the left half.
+If (i % 2 == 0 and arr[i] == arr[i-1]) or (i%2 == 1 and arr[i] == arr[i+1]), we are in the right half.
+Note: In our case, the index i refers to the index ‘mid’.
+
+How to eliminate the halves:
+
+If we are in the left half of the single element, we have to eliminate this left half (i.e. low = mid+1). Because our single element appears somewhere on the right side.
+If we are in the right half of the single element, we have to eliminate this right half (i.e. high = mid-1). Because our single element appears somewhere on the left side.
+Now, we have resolved the problems and we can use the binary search accordingly.
+
+Code:
+int singleNonDuplicate(vector<int>& nums) {
+        int start = 0;
+        int end = nums.size() - 1;
+        int mid = start + (end - start) / 2;
+        if(nums.size() == 1){
+            return nums[0];
+        }
+        while(start <= end){
+            //handling edge cases:
+            if(mid == 0 && nums[0] != nums[1])return nums[0];
+    
+            if((mid == nums.size() - 1) && (nums[mid] != nums[mid - 1]))return nums[mid];
+
+            if(nums[mid - 1] < nums[mid]  && nums[mid] < nums[mid + 1]){
+                return nums[mid];
+            }
+            //eliminating right half desired element is at left half
+            else if((mid % 2 == 0 && nums[mid] == nums[mid - 1]) || (mid % 2 == 1 && nums[mid] == nums[mid + 1])){
+                end = mid - 1;
+            }
+            //eliminating left half or desired element is at right half
+            else if((mid % 2 == 0 && nums[mid] == nums[mid + 1]) || (mid % 2 == 1 && nums[mid] == nums[mid - 1])){
+                start = mid + 1;
+            }
+
+            mid = start + (end - start) / 2;
+        }
+
+        return 0;
+    }

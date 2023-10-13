@@ -1,0 +1,36 @@
+used two hashmaps for 2 strings..
+if the two hashmaps are equal the its a valid anagram.
+
+bool isAnagram(string s, string t) {
+        map<char,int> map1, map2;
+        for(int i = 0; i < s.length(); i++){
+            map1[s[i]]++;
+        }
+
+        for(int i = 0; i < t.length(); i++){
+            map2[t[i]]++;
+        }
+
+        if(map1 == map2){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+Approach 2: Sorting
+Explanation:
+sort(s.begin(), s.end()); sorts the characters in string s in ascending order. This rearranges the characters in s so that they are in alphabetical order.
+sort(t.begin(), t.end()); sorts the characters in string t in ascending order. Similarly, this rearranges the characters in t to be in alphabetical order.
+return s == t; compares the sorted strings s and t using the equality operator (==). If the sorted strings are equal, it means that the original strings s and t have the same characters in the same order, indicating that they are anagrams. In this case, the function returns true. Otherwise, if the sorted strings are not equal, the function returns false, indicating that the strings are not anagrams.
+This code takes advantage of the fact that anagrams have the same characters, but in different orders. By sorting the characters, the code transforms the problem into a comparison of the sorted strings, simplifying the anagram check.
+
+However, it's worth noting that this approach has a time complexity of O(n log n) due to the sorting operation, where n is the length of the strings.
+
+bool isAnagram(string s, string t) {
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
+        return s == t;
+    }

@@ -1,0 +1,29 @@
+int findMin(vector<int>& nums) {
+        int low = 0;
+        int high = nums.size() - 1;
+        int mid = low + (high - low) / 2;
+        int ans = INT_MAX;
+
+        while(low <= high){
+            //check if left half is sorted
+            if(nums[low] <= nums[mid]){
+                //as sorted, pick the low and discard the half as we have got the minimum of the sorted half
+                if(nums[low] < ans){
+                    ans = nums[low];
+                }
+                low = mid + 1;
+            }
+            //check if right half is sorted
+            else if(nums[mid] <= nums[high]){
+                //as sorted, pick the low and discard the half
+                if(nums[mid] < ans){
+                    ans = nums[mid];
+                }
+                high = mid - 1;
+            }
+
+            mid = low + (high - low) / 2;
+        }
+
+        return ans;
+    }

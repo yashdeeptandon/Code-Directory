@@ -1,0 +1,24 @@
+int romanToInt(string s) {
+        int n = s.size();
+        int ans = 0;
+        map<char, int> hashmap;
+        hashmap['I'] = 1;
+        hashmap['V'] = 5;
+        hashmap['X'] = 10;
+        hashmap['L'] = 50;
+        hashmap['C'] = 100;
+        hashmap['D'] = 500;
+        hashmap['M'] = 1000;
+        
+        for(int i = 1; i <= n; i++){
+            if(hashmap[s[i - 1]] < hashmap[s[i]]){
+                ans = ans + hashmap[s[i]] - hashmap[s[i - 1]];
+                i++;
+            }
+            else{
+                ans = ans + hashmap[s[i - 1]];
+            }
+        }
+
+        return ans;
+    }

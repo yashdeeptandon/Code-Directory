@@ -1,0 +1,53 @@
+int search(vector<int>& nums, int target) {
+        // unordered_map<int, int> hashmap;
+        // for(int i = 0; i < nums.size(); i++){
+        //     hashmap[nums[i]] = i; 
+        // }
+
+        // if(hashmap.find(target) == hashmap.end()){
+        //     return -1;
+        // }
+        // else{
+        //     return hashmap[target];
+        // }
+
+        
+Identify which half is sorted or not, then check if the sorted half contains the target or not. If not then eliminate the half
+
+	int start = 0;
+        int end = nums.size() - 1;
+        int mid = start + (end - start) / 2;
+        int ans = -1;
+
+        while(start <= end){
+            if(nums[mid] == target){
+                ans = mid;
+                break;
+            }
+            //identifying which half is sorted because either one has to be sorted
+            else if(nums[start] <= nums[mid]){
+                //check if target lies in this left half
+                if(nums[start] <= target && nums[mid] >= target){
+                    end = mid - 1;
+                }
+                //eleminating the half as target not in range
+                else{
+                    start = mid + 1;
+                }
+            }
+            else if(nums[end] >= nums[mid]){
+                //check if target lies in this right half
+                if(nums[mid] <= target && nums[end] >= target){
+                    start = mid + 1;
+                }
+                //eleminating the half as target not in range
+                else{
+                    end = mid - 1;
+                }
+            }
+
+            mid = start + (end - start) / 2;
+        }
+
+        return ans;
+    }

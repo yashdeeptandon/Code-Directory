@@ -1,0 +1,28 @@
+if the characters are not mapped then map them..if they are mapped then check if they are mapped to correct character.
+eg: s1 = a a b c b d
+    s2 = x x y z y t
+
+then a-> x & x -> a
+     b-> y & y -> b
+     c-> z & z -> c
+     d-> t & t -> d
+
+bool isIsomorphic(string s, string t) {
+        map<char, char> map1;
+        map<char, char> map2;
+
+        for(int i = 0; i < s.length(); i++){
+            char ch1 = s[i];
+            char ch2 = t[i];
+
+            if(!map1[ch1] && !map2[ch2]){	//haven't mapped at first then map them
+                map1[ch1] = ch2;
+                map2[ch2] = ch1;
+            }
+            else if(map1[ch1] != ch2){	//if not mapped correctly
+                return false;
+            }
+            
+        }
+        return true;
+    }

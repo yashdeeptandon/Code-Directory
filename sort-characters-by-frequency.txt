@@ -1,0 +1,27 @@
+Explanation: https://www.youtube.com/watch?v=eaGJh4v-wy4
+
+string frequencySort(string s) {
+        unordered_map<char, int> mpp; // Create an unordered map to store character frequency count
+        for(int i = 0; i < s.length(); i++){ // Iterate through each character in s
+            mpp[s[i]]++; // Increment the frequency count of the character in the map
+        }
+         s=""; // Clear the original string to prepare for the modified string
+        vector<pair<char,int>>vec(mpp.begin(), mpp.end()); // Create a vector of pairs from the map and initializing the vector with map values
+
+        sort(vec.begin(), vec.end(), [](const pair<char,int>& a, const pair<char, int>& b) { // Sort the vector in descending order based on frequency count
+        return a.second > b.second;
+        });
+        for(auto i:vec){ // Iterate through each pair in the sorted vector
+            
+            if(i.second>1){ // If the frequency count of the character is greater than 1
+                int count=0;
+                while(count<i.second){ // Append the character to s multiple times based on its count
+                    s+=i.first;
+                    count++;
+                }
+            }
+            else
+            s+=i.first; // If the frequency count is 1, simply append the character to s
+        }
+        return s; // Return the modified string
+    }
