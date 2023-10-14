@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void inorderTraversal(TreeNode *root, vector<int> &inorder){
+        if(root == NULL){
+            return;
+        }
+
+        inorderTraversal(root->left, inorder);
+        inorder.push_back(root->val);
+        inorderTraversal(root->right, inorder);
+
+    }
+    bool isValidBST(TreeNode* root) {
+        // as we know that inorder traversal of BST is always in increasing order
+
+        vector<int> inorder;
+        inorderTraversal(root, inorder);
+        bool flag = true;
+        for(int i = 1; i < inorder.size(); i++){
+            if(inorder[i] <= inorder[i - 1]){
+                flag = false;
+            }
+        }
+
+        return flag;
+
+    }
+};
