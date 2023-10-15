@@ -1,0 +1,45 @@
+class Solution
+{
+    public: 
+    //Function to convert binary tree to doubly linked list and return it.
+    void buildNode(int data){
+        
+    }
+    
+    Node *DLL(Node* root, Node* &head, Node* &curr){
+        
+        if(root == NULL){
+            return NULL;
+        }
+        
+        
+        DLL(root->left, head, curr);
+        
+        //create a node
+        Node* temp = new Node(root->data);
+        
+        if(head == NULL){// if first node
+            head = temp;
+            curr = temp;
+        }else{  //connecting temp node to original node
+            curr->right = temp;
+            temp->left = curr;
+            curr = temp;
+        }
+        
+        DLL(root->right, head, curr);
+        
+        return head;
+    }
+    Node * bToDLL(Node *root)
+    {
+        // your code here
+        Node *temp = NULL;
+        Node* head = NULL; 
+        Node* curr = NULL; 
+        temp = DLL(root, head, curr);
+        
+        return temp;
+        
+    }
+};
