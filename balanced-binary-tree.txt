@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int maxDepth(TreeNode *root, int &maxDiff){
+        if(root == NULL){
+            return 0;
+        }
+
+        int leftDepth = maxDepth(root->left, maxDiff);
+        int rightDepth = maxDepth(root->right, maxDiff);
+        int maxi = max(leftDepth, rightDepth) + 1;
+
+        int diff = abs(leftDepth - rightDepth);
+        if(maxDiff < diff){
+            maxDiff = diff;
+        }
+
+        return maxi;
+    }
+
+    bool isBalanced(TreeNode* root) {
+        if(root == NULL){
+            return true;
+        }
+
+        int maxDiff = 0;
+        maxDepth(root, maxDiff);
+
+        if(maxDiff <= 1){
+            return true;
+        }
+        
+        return false;
+    }
+};
